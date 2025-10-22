@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import express from "express";
 import User from "../models/User.js"
 import bcrypt from "bcryptjs"
+import jwt from "jsonwebtoken"
 
 const router = express.Router();
 
@@ -33,7 +34,9 @@ router.post('/login', async (req,res)=>{
     if(!passmatch){
         res.status(400).send('Invalid Credentias')
     }
-    res.status(200).send('User logged In')
+    const token = jwt.sign({userId: user._id}, process.env.JWT_SECRET, {expiresIn: "1h"});
+
+    res.status(200).json({'msg': 'User logged In', token})
 
 })
 export default router
