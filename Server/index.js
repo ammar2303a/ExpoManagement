@@ -3,10 +3,12 @@ import mongoose from 'mongoose';
 import dotenv, {config} from "dotenv"
 import authRoutes from "./routes/auth.js"
 import prodRoutes from "./routes/prodRoutes.js"
+import cors from 'cors'
 
 const app = express();
 dotenv.config()
 app.use(express.json())
+app.use(cors())
 
 app.get('/test', (req, res) => {
     res.json({'msg': 'testing api'})
