@@ -1,59 +1,102 @@
-import React from 'react'
-import { useState } from 'react'
-import { useEffect } from 'react'
-import axios from "axios"
-import { useNavigate } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
+import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
 function Login() {
-const [email, setEmail] = useState('');
-const [password, setPass] = useState('');
+  
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const navigate = useNavigate()
+    // console.log(name);
 
-const navigate = useNavigate();
-const loginsubmit = async (e) =>{
-    e.preventDefault();
+    const handlesubmit = async (e) => {
+        e.preventDefault();
+        try {
+           const res =  await axios.post("http://localhost:5000/api/auth/login", {email,password});
+            localStorage.setItem('token', res.data.token)
+        alert("Login Succesfull")
+        navigate("/")
+        } catch (error) {
+            alert("Login falied")
+            
+        }
 
-try {
-      const res =   await axios.post("http://localhost:5000/api/auth/login", {email, password})
-    localStorage.setItem('token', res.data.token )
-    alert("Login Successfull")
-    navigate("/")
-} catch (error) {
-    alert("Login Failed")
-}
-}
-  return (
-    <div>
-          <section className="contact-section spad">
-  <div className="container">
-    <div className="row justify-content-center">
-      <div className="col-lg-6 col-md-8">
-        <div className="section-title text-center mb-4">
-          <h2>Login</h2>
-          <p>Join our event by creating your account below</p>
+    }
+
+    return (
+        <>
+                   <main className="main-wrapper">
+      <section
+        className="cta-section py-5 text-light"
+        style={{
+          background: "linear-gradient(135deg, #1a1a1a 0%, #343a40 100%)",
+          minHeight: "100vh",
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        <div className="container text-center mt-5">
+          <h2 className="heading mb-4 text-white">Create Your Account</h2>
+          <p className="intro mb-5 text-white-50">
+            Register now to join the conference and stay updated.
+          </p>
+
+          <div className="row justify-content-center">
+            <div className="col-md-6 col-lg-5">
+              <div
+                className="card shadow-lg p-4 border-0 rounded-4"
+                style={{
+                  backgroundColor: "#3e5c7aff",
+                  color: "#fff",
+                }}
+              >
+                <form onSubmit={handlesubmit}>
+                  
+
+                  <div className="mb-3 text-start">
+                    <label className="form-label fw-bold text-light">
+                      Email Address
+                    </label>
+                    <input
+                      type="email"
+                      className="form-control bg-dark text-light border-0" value={email} onChange={(e) => setEmail(e.target.value)}
+                      placeholder="Enter your email"
+                      required
+                    />
+                  </div>
+
+                  <div className="mb-4 text-start">
+                    <label className="form-label fw-bold text-light">
+                      Password
+                    </label>
+                    <input
+                      type="password"
+                      className="form-control bg-dark text-light border-0" value={password} onChange={(e) => setPassword(e.target.value)}
+                      placeholder="Enter your password"
+                      required
+                    />
+                  </div>
+
+                  <button type="submit" className="btn btn-primary w-100">
+                    Login
+                  </button>
+
+                  <p className="mt-3 mb-0 text-center text-white-50">
+                    You don't have an account?{" "}
+                    <a href="/login" className="text-decoration-none text-info">
+                      Register
+                    </a>
+                  </p>
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
-
-        <form className="contact-form" onSubmit={loginsubmit} >
-          <div className="form-group">
-            <input type="email" className="form-control"value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email Address" required />
-          </div>
-          <div className="form-group">
-            <input type="password" className="form-control" value={password} onChange={(e) => setPass(e.target.value)} placeholder="Password" required />
-          </div>
-          {/* <div className="form-group">
-            <select className="form-control disabled ">
-              <option value="">Select Role</option>
-              <option value="attendee">Attendee</option>
-              <option value="exhibitor">Exhibitor</option>
-            </select>
-          </div> */}
-          <button type="submit" className="site-btn">Login</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</section>
-    </div>
-  )
+      </section>
+    </main>
+        </>
+    )
 }
 
 export default Login
