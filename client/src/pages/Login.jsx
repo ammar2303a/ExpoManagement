@@ -15,8 +15,15 @@ function Login() {
         try {
            const res =  await axios.post("http://localhost:5000/api/auth/login", {email,password});
             localStorage.setItem('token', res.data.token)
-        alert("Login Succesfull")
-        navigate("/")
+            localStorage.setItem('isAdmin', res.data.user.isAdmin)
+            alert("Login Succesfull")
+
+            if (res.data.user.isAdmin) {
+              navigate('/admin')
+            }else{
+               navigate("/")
+            }
+       
         } catch (error) {
             alert("Login falied")
             

@@ -1,10 +1,11 @@
 import mongoose, { get } from "mongoose";
 import express from "express"
 import Product from "../models/Product.js";
+import { verifyadmin } from "../middleware/adminauth.js";
 
 const router = express.Router()
 
-router.post('/create', async (req, res)=>{
+router.post('/create', verifyadmin, async (req, res)=>{
     const  {title, price, image , description} = req.body;
     const prod = await Product({title,price,image,description})
 
