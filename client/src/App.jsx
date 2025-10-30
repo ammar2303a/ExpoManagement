@@ -1,13 +1,12 @@
 import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom'
 
-
-import Nav from './components/Nav'
-import Footer from './components/Footer'
 import Home from './pages/Home'
 import { useEffect } from 'react'
 import Register from './pages/Register'
 import Login from './pages/Login'
 import Dashboard from './pages/admin/Dashboard'
+import UserLayout from './components/user/UserLayout'
+import AdminLayout from './components/admin/AdminLayout'
 
 function App() {
 
@@ -21,17 +20,42 @@ function App() {
     return children;
   }
   return(
-    <BrowserRouter>
-  <Nav/>
-<Routes>
+
+//     <BrowserRouter>
+//   <Nav/>
+// <Routes>
   
-  <Route path='/' element={<Home/>}/>
-  <Route path='/register' element={<Register/>}/>
-  <Route path='/login' element={<Login/>}/>
-  <Route path='/admin' element={<PrivateRoutes adminOnly={true}><Dashboard/></PrivateRoutes>}/>
+//   <Route path='/' element={<Home/>}/>
+//   <Route path='/register' element={<Register/>}/>
+//   <Route path='/login' element={<Login/>}/>
+//   <Route path='/admin' element={<PrivateRoutes adminOnly={true}><Dashboard/></PrivateRoutes>}/>
+// </Routes>
+//   <Footer/>
+//   </BrowserRouter>
+<BrowserRouter>
+<Routes>
+  <Route path='/*' element={
+    <UserLayout>
+      <Routes>
+        <Route path='/' element={<Home/>}/>
+      <Route path='/register' element={<Register/>}/>
+      <Route path='/login' element={<Login/>}/>
+      </Routes>
+    </UserLayout>
+  }/>
+
+  <Route path='/admin/*' element={
+    <PrivateRoutes adminOnly={true}>
+     <AdminLayout>
+       <Routes>
+        <Route path='' element={<Dashboard/>}/>
+      </Routes>
+      </AdminLayout>
+    </PrivateRoutes>
+  }/>
 </Routes>
-  <Footer/>
-  </BrowserRouter>
+</BrowserRouter>
+
   )
 }
 

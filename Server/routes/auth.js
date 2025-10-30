@@ -34,7 +34,7 @@ router.post('/login', async (req,res)=>{
     if(!passmatch){
         res.status(400).send('Invalid Credentias')
     }
-    const token = jwt.sign({userId: user._id, isadmin: user.isAdmin}, process.env.JWT_SECRET, {expiresIn: "1h"});
+    const token = jwt.sign({userId: user._id, isAdmin: user.isAdmin}, process.env.JWT_SECRET, {expiresIn: "1h"});
 
     // res.status(200).json({'msg': 'User logged In', token})
     res.json({token, user:{

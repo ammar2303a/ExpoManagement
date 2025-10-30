@@ -2,10 +2,10 @@ import jwt from "jsonwebtoken"
 
 export const verifytoken = (req,res, next)=>{
     // const token = localStorage.getItem('token')
-      const authHeader = req.headers.authorization;
+      const token = req.headers.authorization?.split(' ')[1]
 
   // Token usually hota hai "Bearer <token>"
-  const token = authHeader && authHeader.split(" ")[1];
+//   const token = authHeader && authHeader.split(" ")[1];
 
     if(!token){
     return res.status(401).json({'error': 'Access Denied. No token provided.'})
@@ -25,8 +25,8 @@ export const verifyadmin = (req,res, next) =>{
     verifytoken(req, res, ()=>{
         if(!req.user.isAdmin){
             return res.status(403).json({'error': 'Admin Only'})
-            next()
         }
+        next()
     })
 }
 
