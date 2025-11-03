@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import dotenv, {config} from "dotenv"
 import authRoutes from "./routes/auth.js"
 import prodRoutes from "./routes/prodRoutes.js"
+import venRoutes from "./routes/venue.js"
 import cors from 'cors'
 
 const app = express();
@@ -21,6 +22,7 @@ mongoose.connect(process.env.MONGO_URI).then(
 
 app.use("/api/auth", authRoutes)
 app.use('/api/product', prodRoutes)
+app.use('/api/venue', venRoutes)
 
 app.listen(5000, ()=>{
 console.log('Applictation running on port 5000')

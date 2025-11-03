@@ -7,6 +7,7 @@ import Login from './pages/Login'
 import Dashboard from './pages/admin/Dashboard'
 import UserLayout from './components/user/UserLayout'
 import AdminLayout from './components/admin/AdminLayout'
+import VenueAdd from './pages/admin/VenueAdd'
 
 function App() {
 
@@ -49,6 +50,7 @@ function App() {
      <AdminLayout>
        <Routes>
         <Route path='' element={<Dashboard/>}/>
+        <Route path='/venue' element={<VenueAdd/>}/>
       </Routes>
       </AdminLayout>
     </PrivateRoutes>

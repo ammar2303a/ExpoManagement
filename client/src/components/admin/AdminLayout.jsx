@@ -3,7 +3,9 @@ import Sidebar from './Sidebar'
 import Navbar from './Navbar'
 
 const AdminLayout = ({children}) => {
+  
   return (
+    
     <div id='page-top'>
         <div id='wrapper' >
     <Sidebar/>

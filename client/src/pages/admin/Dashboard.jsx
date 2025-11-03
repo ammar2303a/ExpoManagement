@@ -3,7 +3,7 @@ import React from 'react'
 function Dashboard() {
   return (
     <div>
-    <h1>Admin panel</h1>
+    <h1 className='text-center'>Admin panel</h1>
     </div>
   )
 }
