@@ -15,6 +15,7 @@ function Venue() {
 						
 						<div className="row pt-3">
 							<div className="col-12 col-md-6 mb-4">
+								{}
 								<div className="grid-item p-4">
 									<h5 className="text-white mb-3 title"><i className="fas fa-plane-departure me-2"></i>By Plane</h5>
 									<p>Aliquam gravida, enim et efficitur feugiat, tellus ligula scelerisque orci, et sagittis erat lectus sit amet orci.</p>
