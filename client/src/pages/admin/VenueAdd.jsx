@@ -24,10 +24,11 @@ function VenueAdd() {
 
       const addTravelOption = () => {
     if (!mode) return alert("Please select mode");
-    const newOption = { mode, description, linkUrl };
+    const newOption = { mode, description, linkUrl, linkText };
     setTravelOptions([...travelOptions, newOption]);
     setDescription("");
     setLinkUrl("");
+    setLinkText("");
     alert(`${mode} option added!`);
   };
 
@@ -78,6 +79,8 @@ function VenueAdd() {
 
     useEffect(() =>{
         fetchVenue();
+        console.log(allVenues);
+        
     },[])
 
   return (
@@ -85,13 +88,10 @@ function VenueAdd() {
       <h2 className='text-center'>
         Manage Venue
       </h2>
-        {/* <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            Add Venues
-        </button> */}
-        {/* <!-- Button to open main modal --> */}
+      
 <button
   type="button"
-  class="btn btn-primary"
+  class="btn btn-primary m-3"
   data-bs-toggle="modal"
   data-bs-target="#mainModal"
 >
@@ -148,50 +148,6 @@ function VenueAdd() {
 </table>
 
 
-{/* <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div className="modal-dialog">
-    <div className="modal-content">
-       <form onSubmit={eventSubmit}>
-      <div className="modal-header">
-        <h1 className="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div className="modal-body">
-
-        <div class="input-group mb-3">
-  <span className="input-group-text w-25" id="basic-addon1">Venue Name</span>
-  <input type="text" value={name} onChange={(e) =>setName(e.target.value)} class="form-control"/>
-</div>
-
-   <div class="input-group mb-3">
-  <span className="input-group-text w-25" id="basic-addon1">Venue Address</span>
-  <input type="text" value={address} onChange={(e) =>setAddress(e.target.value)} class="form-control"/>
-</div>
-
-   <div class="input-group mb-3">
-  <span className="input-group-text w-25" id="basic-addon1">Venue City</span>
-  <input type="text" value={city} onChange={(e) =>setCity(e.target.value)} class="form-control"/>
-</div>
-
-   <div class="input-group mb-3">
-  <span className="input-group-text w-25" id="basic-addon1">Venue Map</span>
-  <input type="text" value={mapLink} onChange={(e) =>setMapLink(e.target.value)} class="form-control"/>
-</div>
-
-<div class="input-group mb-3">
-  <span className="input-group-text w-25" id="basic-addon1">Capacity</span>
-  <input type="text" value={capacity} onChange={(e) =>setCapacity(e.target.value)} class="form-control"/>
-</div>
-
-</div>
-      <div className="modal-footer">
-        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="submit" className="btn btn-primary">Save changes</button>
-      </div>
-    </form> 
-    </div>
-  </div>
-</div> */}
 
 
 
@@ -358,6 +314,15 @@ function VenueAdd() {
                   onChange={(e) => setLinkUrl(e.target.value)}
                 />
               </div>
+              <div className="mb-2">
+                <label className="form-label">Link Text</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={linkText}
+                  onChange={(e) => setLinkText(e.target.value)}
+                />
+              </div>
                
 
       </div>
@@ -391,10 +356,11 @@ function VenueAdd() {
     class="btn btn-success"
     onClick={() => {
       if (!mode) return alert("Please select mode");
-      const newOption = { mode, description, linkUrl };
+      const newOption = { mode, description, linkUrl, linkText };
       setTravelOptions([...travelOptions, newOption]);
       setDescription("");
       setLinkUrl("");
+      setLinkText("")
       alert(`${mode} option added!`);
 
       const travelModalEl = document.getElementById("travelModal");
