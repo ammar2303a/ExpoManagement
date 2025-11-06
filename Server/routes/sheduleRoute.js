@@ -15,7 +15,7 @@ router.post("/create", verifyadmin, async (req,res) =>{
 
 router.get("/", async(req, res)=>{
     const getShedule = await Shedule.find()
-    .populate("sessions.speaker", "name")
+    .populate("sessions.speaker", "name image")
     .populate("sessions.venue", "name");
     res.json({getShedule})
 })
