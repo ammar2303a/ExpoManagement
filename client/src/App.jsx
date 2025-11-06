@@ -9,6 +9,7 @@ import UserLayout from './components/user/UserLayout'
 import AdminLayout from './components/admin/AdminLayout'
 import VenueAdd from './pages/admin/VenueAdd'
 import SpeakerAdd from './pages/admin/SpeakerAdd'
+import ScheduleAdd from './pages/admin/ScheduleAdd'
 
 function App() {
 
@@ -53,6 +54,7 @@ function App() {
         <Route path='' element={<Dashboard/>}/>
         <Route path='/venue' element={<VenueAdd/>}/>
         <Route path='/speaker' element={<SpeakerAdd/>}/>
+         <Route path='/shedule' element={<ScheduleAdd/>}/>
       </Routes>
       </AdminLayout>
     </PrivateRoutes>

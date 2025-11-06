@@ -22,9 +22,7 @@ function Venue() {
     
     },[])
   return (
-    <div>
-<<<<<<< HEAD
-     	
+    <div>     	
 <section
       id="venue-section"
       className="venue-section section theme-bg-primary text-white"
@@ -179,7 +177,6 @@ function Venue() {
 			</div>
 		</div>
 	</section>
->>>>>>> a2197bf399dbc6de92427d11cdbddd2711fe2997
     </div>
   )
 }

@@ -43,7 +43,7 @@ function Sidebar() {
                 </Link>
             </li>
             <li className="nav-item">
-                <Link className="nav-link collapsed" to="#" >
+                <Link className="nav-link collapsed" to="/admin/shedule" >
                     <span>Schedule</span>
                 </Link>
             </li>

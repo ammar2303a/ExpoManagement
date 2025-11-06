@@ -160,10 +160,7 @@ function SpeakerAdd() {
 
         <div className="mb-2">
           <label className="form-label">Select Venue</label>
-          <select 
-  className="form-select" 
-  value={venueId} 
-  onChange={(e) => setvenueId(e.target.value)}
+          <select className="form-select" value={venueId} onChange={(e) => setvenueId(e.target.value)}
 >
   <option value="">Select</option>  {/* ← Empty value agar select nahi hua */}
   {allVenues.map((allven, index) => (
