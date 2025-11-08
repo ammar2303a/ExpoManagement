@@ -10,6 +10,9 @@ import AdminLayout from './components/admin/AdminLayout'
 import VenueAdd from './pages/admin/VenueAdd'
 import SpeakerAdd from './pages/admin/SpeakerAdd'
 import ScheduleAdd from './pages/admin/ScheduleAdd'
+import TicketsAdd from './pages/admin/TicketsAdd'
+import EventAdd from './pages/admin/EventAdd'
+import SponsorsAdd from './pages/admin/SponsorsAdd'
 
 function App() {
 
@@ -55,6 +58,9 @@ function App() {
         <Route path='/venue' element={<VenueAdd/>}/>
         <Route path='/speaker' element={<SpeakerAdd/>}/>
          <Route path='/shedule' element={<ScheduleAdd/>}/>
+         <Route path='/ticket' element={<TicketsAdd/>}/>
+        <Route path='/event' element={<EventAdd/>}/>
+         <Route path='/sponsors' element={<SponsorsAdd/>}/>
       </Routes>
       </AdminLayout>
     </PrivateRoutes>

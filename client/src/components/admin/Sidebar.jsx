@@ -32,7 +32,7 @@ function Sidebar() {
                 Interface
             </div>            
             <li className="nav-item">
-                <Link className="nav-link collapsed" to="#" >
+                <Link className="nav-link collapsed" to="/admin/event" >
                     <span>Events</span>
                 </Link>
             </li>
@@ -48,7 +48,7 @@ function Sidebar() {
                 </Link>
             </li>
             <li className="nav-item">
-                <Link className="nav-link collapsed" to="#" >
+                <Link className="nav-link collapsed" to="/admin/ticket" >
                     <span>Tickets</span>
                 </Link>
             </li>
@@ -58,7 +58,7 @@ function Sidebar() {
                 </Link>
             </li>
             <li className="nav-item">
-                <Link className="nav-link collapsed" to="#" >
+                <Link className="nav-link collapsed" to="/admin/sponsors" >
                     <span>Sponsors</span>
                 </Link>
             </li>

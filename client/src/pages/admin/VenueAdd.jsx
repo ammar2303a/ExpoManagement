@@ -97,55 +97,108 @@ function VenueAdd() {
 >
   Add Venue
 </button>
-      <table className="table mt-3">
-  <thead>
-    <tr>
-      <th scope="col">Name</th>
-      <th scope="col">Address</th>
-      <th scope="col">City</th>
-      <th scope="col">Map</th>
-      <th scope="col">Capacity</th>
-      <th scope="col">Images</th>
-      <th scope="col">Travel Options</th>
+  <div className="mt-3">
+  <div className="card shadow-sm border-0 rounded-3 h-100" style={{ maxHeight: "75vh" }}>
+    <div className="card-header bg-primary text-white d-flex justify-content-between align-items-center py-2 px-3">
+      <h6 className="mb-0 text-light">Venue List</h6>
+      <span className="badge bg-light text-primary">
+        Total: {allVenues?.length || 0}
+      </span>
+    </div>
 
-    </tr>
-  </thead>
- <tbody>
-  {allVenues.map((allven, index) => (
-    <tr key={index}>
-      <td>{allven.name}</td>
-      <td>{allven.address}</td>
-      <td>{allven.city}</td>
-      <td>
-        <a href={allven.mapLink} target="_blank" rel="noreferrer">
-          View Map
-        </a>
-      </td>
-      <td>{allven.capacity}</td>
-      <td>{allven.galleryImages}</td>
+    {/* ✅ Scrollable Table Area */}
+    <div
+      className="card-body p-0"
+      style={{ overflowY: "auto", overflowX: "auto", maxHeight: "65vh", minWidth: "600px" }} // X + Y scroll
+    >
+      <table className="table table-hover table-striped align-middle mb-0">
+        <thead className="table-light sticky-top">
+          <tr>
+            <th className="text-nowrap">Name</th>
+            <th className="text-nowrap">Address</th>
+            <th className="text-nowrap">City</th>
+            <th className="text-nowrap">Map</th>
+            <th className="text-nowrap">Capacity</th>
+            <th className="text-nowrap">Images</th>
+            <th className="text-nowrap">Travel Options</th>
+          </tr>
+        </thead>
 
-      {/* ✅ New Column for Travel Options */}
-      <td>
-        {allven.travelOptions && allven.travelOptions.length > 0 ? (
-          <ul className="list-unstyled mb-0">
-            {allven.travelOptions.map((opt, i) => (
-              <li key={i}>
-                <strong>{opt.mode}</strong> — {opt.description}{" "}
-                <a href={opt.linkUrl} target="_blank" rel="noreferrer">
-                  Link
-                </a>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <span>No travel options</span>
-        )}
-      </td>
-    </tr>
-  ))}
-</tbody>
+        <tbody>
+          {Array.isArray(allVenues) && allVenues.length > 0 ? (
+            allVenues.map((allven, index) => (
+              <tr key={index}>
+                <td className="fw-semibold text-nowrap">{allven.name}</td>
+                <td style={{ whiteSpace: "normal", maxWidth: "200px" }}>
+                  {allven.address}
+                </td>
+                <td className="text-nowrap">{allven.city}</td>
+                <td>
+                  <a
+                    href={allven.mapLink}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-decoration-none text-primary fw-semibold"
+                  >
+                    View
+                  </a>
+                </td>
+                <td className="text-nowrap">{allven.capacity}</td>
+                <td>
+                  {Array.isArray(allven.galleryImages) && allven.galleryImages.length > 0 ? (
+                    <div className="d-flex flex-wrap gap-1">
+                      {allven.galleryImages.map((img, i) => (
+                        <img
+                          key={i}
+                          src={img}
+                          alt={`venue-${i}`}
+                          width={40}
+                          height={40}
+                          className="rounded shadow-sm"
+                          style={{ objectFit: "cover" }}
+                        />
+                      ))}
+                    </div>
+                  ) : (
+                    <span className="text-muted">No images</span>
+                  )}
+                </td>
+                <td>
+                  {Array.isArray(allven.travelOptions) && allven.travelOptions.length > 0 ? (
+                    <ul className="list-unstyled mb-0 small">
+                      {allven.travelOptions.map((opt, i) => (
+                        <li key={i}>
+                          <strong>{opt.mode}</strong> — {opt.description}{" "}
+                          <a
+                            href={opt.linkUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="text-primary text-decoration-none"
+                          >
+                            Link
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <span className="text-muted">No travel options</span>
+                  )}
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="7" className="text-center text-muted py-4">
+                No venue data available
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
 
-</table>
 
 
 

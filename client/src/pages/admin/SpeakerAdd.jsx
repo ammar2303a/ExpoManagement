@@ -97,29 +97,81 @@ function SpeakerAdd() {
   Add speakers
 </button>
 
-<table className="table mt-5">
-  <thead>
-    <tr>
-      <th scope="col">Name</th>
-      <th scope="col">Bio</th>
-      <th scope="col">Image</th>
-      <th scope="col">Designation</th>
-      <th scope="col">Venue</th>
-    </tr>
-  </thead>
-  <tbody>
-    {allSpeaker.map((speak, index)=>(
-      <tr key={index}>
-      
-      <td>{speak.name}</td>
-      <td>{speak.bio}</td>
-      <td><img src={`http://localhost:5000/uploads/${speak.image}`} width={50} height={50} alt={speak.name} /></td>
-      <td>{speak.designation}</td>
-      <td>{speak.venueId?.name}</td>
-    </tr>
-    ))}
-  </tbody>
-</table>
+<div className="container-fluid mt-4">
+  <div className="card shadow-sm border-0 rounded-3">
+    <div className="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+      <h5 className="mb-0 text-light">Speakers List</h5>
+      <span className="badge bg-light text-primary">
+        Total Speakers: {allSpeaker?.length || 0}
+      </span>
+    </div>
+
+    <div
+      className="card-body p-0"
+      style={{ maxHeight: '400px', overflowY: 'auto' }} // Vertical scroll
+    >
+      <div
+        className="table-responsive"
+        style={{ overflowX: 'auto', minWidth: '600px' }} // Horizontal scroll
+      >
+        <table className="table table-striped table-sm align-middle mb-0">
+          <colgroup>
+            <col style={{ minWidth: '150px' }} /> {/* Name */}
+            <col style={{ minWidth: '250px' }} /> {/* Bio */}
+            <col style={{ minWidth: '100px' }} /> {/* Image */}
+            <col style={{ minWidth: '160px' }} /> {/* Designation */}
+            <col style={{ minWidth: '160px' }} /> {/* Venue */}
+          </colgroup>
+
+          <thead className="table-light">
+            <tr>
+              <th scope="col" className="text-nowrap">Name</th>
+              <th scope="col" className="text-nowrap">Bio</th>
+              <th scope="col" className="text-nowrap">Image</th>
+              <th scope="col" className="text-nowrap">Designation</th>
+              <th scope="col" className="text-nowrap">Venue</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {Array.isArray(allSpeaker) && allSpeaker.length > 0 ? (
+              allSpeaker.map((speak, index) => (
+                <tr key={index}>
+                  <td className="text-nowrap fw-semibold">{speak.name}</td>
+                  <td style={{ whiteSpace: 'normal', maxWidth: '250px' }}>
+                    {speak.bio}
+                  </td>
+                  <td>
+                    <img
+                      src={`http://localhost:5000/uploads/${speak.image}`}
+                      width={50}
+                      height={50}
+                      alt={speak.name}
+                      className="rounded-circle shadow-sm"
+                      style={{ objectFit: 'cover' }}
+                    />
+                  </td>
+                  <td className="text-nowrap">{speak.designation}</td>
+                  <td className="text-nowrap">
+                    {speak.venueId?.name || <span className="text-muted">N/A</span>}
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="5" className="text-center text-muted py-4">
+                  No speaker data available
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
 {/* <!-- Modal --> */}
 <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

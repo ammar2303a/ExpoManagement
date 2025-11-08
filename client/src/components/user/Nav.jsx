@@ -8,6 +8,7 @@ import Schedule from '../../pages/Schedule';
 import Tickets from '../../pages/Tickets';
 import Venue from '../../pages/Venue';
 import Sponsors from '../../pages/Sponsors';
+import Event from '../../pages/Event';
 import { useEffect } from 'react';
 
 function Nav() {
@@ -67,7 +68,7 @@ function Nav() {
 					
 					<div id="navigation" className="navbar-collapse collapse  justify-content-lg-end me-lg-3">
 						<ul className="nav navbar-nav">
-							
+							<li className="nav-item"><Link className="nav-link scrollto" to="#events" onClick={(e) =>handlescroll(e, Event)}>Events</Link></li>   
 							<li className="nav-item"><Link className="nav-link scrollto" to="#about-section" onClick={(e) =>handlescroll(e, About)}>About</Link></li>                                              
 							<li className="nav-item"><Link className="nav-link scrollto" to="#speakers-section" onClick={(e) =>handlescroll(e, Speaker)}>Speakers</Link></li>
 							<li className="nav-item"><Link className="nav-link scrollto" to="#schedule-section" onClick={(e) =>handlescroll(e, Schedule)}>Schedule</Link></li>
