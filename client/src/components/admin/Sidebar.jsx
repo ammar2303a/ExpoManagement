@@ -57,7 +57,7 @@ function Sidebar() {
                     <span>Venues</span>
                 </Link>
             </li>
-            <li className="nav-item">
+            {/* <li className="nav-item">
                 <Link className="nav-link collapsed" to="/admin/sponsors" >
                     <span>Sponsors</span>
                 </Link>
@@ -71,7 +71,7 @@ function Sidebar() {
                 <Link className="nav-link collapsed" to="#" >
                     <span>Users</span>
                 </Link>
-            </li>
+            </li> */}
 
             
             <hr className="sidebar-divider"/>
