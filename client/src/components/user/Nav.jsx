@@ -60,7 +60,7 @@ function Nav() {
 				<nav className="main-nav navbar navbar-expand-lg">
 					<div className="site-logo"><Link className="scrollto" to="/"><img className="logo-icon" src="assets/images/logo-white.svg" alt="logo"/></Link></div>    
 					
-					<div className="navbar-btn order-lg-2"><Link className="btn btn-secondary" to="https://themes.3rdwavemedia.com/bootstrap-templates/startup/devconf-free-bootstrap-4-conference-template-for-tech-conferences-and-events/" target="_blank">Tickets</Link></div>
+					
 					
 					<button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
 						<span className="navbar-toggler-icon"></span>
@@ -83,6 +83,7 @@ function Nav() {
               ):(
                 <>
              	<li className="nav-item"><Link className="nav-link scrollto" to="/login" onClick={logoutsubmit}>Logout</Link></li>
+                <div className="navbar-btn order-lg-2 mt-1"><Link className="btn btn-secondary" to="/showticket">Show Tickets</Link></div>
 
                 </>
               )}

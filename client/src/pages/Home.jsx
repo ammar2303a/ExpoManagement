@@ -8,6 +8,12 @@ import Sponsors from './Sponsors'
 import Event from './Event'
 
 function Home() {
+	  const handlescroll = (e, id) =>{
+      const section = document.getElementById(id)
+      if (section) {
+        section.scrollIntoView({behavior: "smooth"})
+      }
+    }
 	return (
 		<div>
 			<div id="hero-block" className="hero-block">
@@ -24,10 +30,10 @@ function Home() {
 				<div className="hero-block-mask"></div>
 				<div className="container">
 					<div className="hero-text-block">
-						<h1 className="hero-heading mb-2">DevConf 2028</h1>
-						<div className="hero-meta mb-3"><i className="far fa-calendar-alt me-2"></i>12 - 15 Oct <i className="fas fa-map-marker-alt mx-2"></i>New York, USA</div>
-						<div className="hero-intro mb-4">The #1 Bootstrap Template for <br />Tech Conferences and Events.</div>
-						<div className="hero-cta"><a className="btn btn-primary btn-lg" href="https://themes.3rdwavemedia.com/bootstrap-templates/startup/devconf-free-bootstrap-4-conference-template-for-tech-conferences-and-events/" target="_blank">Get Tickets</a></div>
+						<h1 className="hero-heading mb-2">EventSphere</h1>
+						<div className="hero-meta mb-3"><i className="far fa-calendar-alt me-2"></i>10 - 12 Dec, Karachi, Pakistan<i className="fas fa-map-marker-alt mx-2"></i>Downtown Expo Center</div>
+						<div className="hero-intro mb-4">   Discover and <br />Join Exciting Events in One Place</div>
+						<div className="hero-cta"><a className="btn btn-primary btn-lg" href="#tickets-section" onClick={(e) =>handlescroll(e, Tickets)}>Get Tickets</a></div>
 
 					</div>
 				</div>

@@ -30,4 +30,8 @@ router.get('/', async (req,res) =>{
     res.json(getProd)
 })
 
+router.get('/:id', async (req,res) =>{
+    const id = await Product.findOne()
+    res.json(id)
+})
 export default  router

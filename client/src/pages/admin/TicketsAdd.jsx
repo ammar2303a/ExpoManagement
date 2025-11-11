@@ -7,6 +7,7 @@ function TicketsAdd() {
     const [name, setName] = useState("");
     const [price, setPrice] = useState("");
     const [quantity, setQuantity] = useState("");
+    const [alltickets, setAllTickets]= useState([])
 
 
     const ticketSubmit = async (e) => {
@@ -30,6 +31,19 @@ function TicketsAdd() {
          alert("Ticket creation failed");
         }
     }
+    const fetchTickets = async ()=>{
+     try {
+       const res = await axios.get("http://localhost:5000/api/ticket/")
+        setAllTickets(res.data.getTicket)
+     } catch (error) {
+      alert('Error fetching record Tickets:', error)
+     }
+    }
+    useEffect(() =>{
+
+            fetchTickets();
+            
+        },[])
   return (
     <div>
       <h2 className='text-center'>
@@ -37,7 +51,7 @@ function TicketsAdd() {
       </h2>
            {/* <!-- Button trigger modal --> */}
 <button type="button" className="btn btn-primary m-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  Add speakers
+  Add Tickets
 </button>
 
       <div className="container-fluid mt-4">
@@ -59,21 +73,24 @@ function TicketsAdd() {
 
           <thead className="table-light">
             <tr>
-              <th scope="col" className="text-nowrap">Column 1</th>
-              <th scope="col" className="text-nowrap">Column 2</th>
-              <th scope="col" className="text-nowrap">Column 3</th>
-              <th scope="col" className="text-nowrap">Column 4</th>
+              <th scope="col" className="text-nowrap">Name</th>
+              <th scope="col" className="text-nowrap">Price</th>
+              <th scope="col" className="text-nowrap">Quantity</th>
+              <th scope="col" className="text-nowrap">Sold</th>
             </tr>
           </thead>
 
           <tbody>
-            {/* Example Row — Future Mapping Yahan Aayegi */}
-            <tr>
-              <td className="fw-semibold text-nowrap">---</td>
-              <td className="text-nowrap">---</td>
-              <td className="text-nowrap">---</td>
-              <td className="text-nowrap">---</td>
+            {alltickets.map((tic, index)=>(
+              <tr key={index} >
+              <td className="fw-semibold text-nowrap">{tic.name}</td>
+              <td className="text-nowrap">{tic.price}</td>
+              <td className="text-nowrap">{tic.quantity}</td>
+              <td className="text-nowrap">{tic.sold}</td>
             </tr>
+            ))}
+
+            
 
             {/* No Data Message */}
             <tr>

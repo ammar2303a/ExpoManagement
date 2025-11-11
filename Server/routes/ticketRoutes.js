@@ -17,4 +17,5 @@ router.get("/", async (req, res)=>{
     res.json({getTicket})
 })
 
+
 export default router

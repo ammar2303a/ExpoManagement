@@ -13,6 +13,7 @@ import ScheduleAdd from './pages/admin/ScheduleAdd'
 import TicketsAdd from './pages/admin/TicketsAdd'
 import EventAdd from './pages/admin/EventAdd'
 import SponsorsAdd from './pages/admin/SponsorsAdd'
+import EventTicket from './pages/EventTicket'
 
 function App() {
 
@@ -40,6 +41,7 @@ function App() {
 //   </BrowserRouter>
 <BrowserRouter>
 <Routes>
+  <Route path='/showticket' element={<EventTicket/>}/>
   <Route path='/*' element={
     <UserLayout>
       <Routes>

@@ -8,6 +8,7 @@ import speakRoutes from "./routes/speakerRoutes.js"
 import shedRoutes from "./routes/sheduleRoute.js"
 import eventRoutes from "./routes/eventRoutes.js"
 import ticketRoutes from "./routes/ticketRoutes.js"
+import bookRoutes from "./routes/bookRoute.js"
 import path from "path"
 import cors from 'cors'
 
@@ -33,6 +34,7 @@ app.use('/api/speaker', speakRoutes)
 app.use('/api/shedule', shedRoutes)
 app.use('/api/event', eventRoutes)
 app.use('/api/ticket', ticketRoutes)
+app.use('/api/book', bookRoutes)
 
 app.listen(5000, ()=>{
 console.log('Applictation running on port 5000')
