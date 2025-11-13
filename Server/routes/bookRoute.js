@@ -31,6 +31,8 @@ router.post("/create", async (req, res) =>{
 
 router.get("/", async (req, res) => {
   try {
+    // const {userId} =req.params.id
+    //  console.log("Frontend se userId:", userId);
     const getBooking = await Booking.find()
       .populate("userId", "name email")
       .populate({

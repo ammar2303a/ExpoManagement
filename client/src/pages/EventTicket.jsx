@@ -8,21 +8,27 @@ function EventTicket() {
 
   const fetchBooking = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/book/")
+      // const userid = localStorage.getItem("id")
+      // const res = await axios.get(`http://localhost:5000/api/book/${userid}`)
+      // setAllBooking(res.data.getBooking)
+      const userid = localStorage.getItem("id")
+      const res = await axios.get(`http://localhost:5000/api/book/`)
       setAllBooking(res.data.getBooking)
+
     } catch (error) {
       alert('Error fetching record Booking:', error)
     }
   }
   useEffect(() => {
     fetchBooking();
-    
+
 
   }, [])
-  useEffect(() => {
+  useEffect(() => {  
+    
     if (allbooking) {
       console.log("Now Booking id here:", allbooking);
-      
+
     }
   }, [allbooking])
 
@@ -38,8 +44,7 @@ function EventTicket() {
       }}
     >
       {allbooking.map((book) => (
-        <div key={book._id}
-          className="ticket-container"
+        <div key={book._id}className="ticket-container"
           style={{
             backgroundColor: "#111",
             width: "700px",
@@ -54,7 +59,7 @@ function EventTicket() {
           <div
             style={{
               flex: 2,
-              padding: "20px 20px",
+              padding: "30px 20px",
               fontSize: "0.8rem",
               lineHeight: "1.1rem",
             }}

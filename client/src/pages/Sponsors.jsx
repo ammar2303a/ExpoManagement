@@ -21,7 +21,7 @@ function Sponsors() {
 				<div className="logo-item col-6 col-md-4 col-lg-2"><img src="assets/images/logos/logo-11.svg" alt=""/></div>
 				<div className="logo-item col-6 col-md-4 col-lg-2"><img src="assets/images/logos/logo-12.svg" alt=""/></div>
 			</div>
-			<div className="sponsors-cta text-center pt-5"><a className="btn-primary btn btn-lg" href="#">Become A Sponsor</a></div>
+			{/* <div className="sponsors-cta text-center pt-5"><a className="btn-primary btn btn-lg" href="#">Become A Sponsor</a></div> */}
 		</div>
 	</section>
     </div>

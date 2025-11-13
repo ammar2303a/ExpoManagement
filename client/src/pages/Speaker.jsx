@@ -208,7 +208,7 @@ function Speaker() {
 					</div>
 				</div> */}
 			</div>
-			<div className="speakers-cta text-center py-3"><a className="btn btn-primary btn-lg" href="https://themes.3rdwavemedia.com/bootstrap-templates/startup/devconf-free-bootstrap-4-conference-template-for-tech-conferences-and-events/" target="_blank">Get Tickets</a></div>
+			{/* <div className="speakers-cta text-center py-3"><a className="btn btn-primary btn-lg" href="https://themes.3rdwavemedia.com/bootstrap-templates/startup/devconf-free-bootstrap-4-conference-template-for-tech-conferences-and-events/" target="_blank">Get Tickets</a></div> */}
 		</div>
 		
 	</section>

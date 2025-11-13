@@ -143,7 +143,9 @@ function Tickets() {
 								</div> */}
 								<div className="mb-3">
 									<label className="form-label">Quantity</label>
-									<input type="number" className="form-control" value={quantity} onChange={(e) =>setQuantity(e.target.value)}  />
+									
+									<input type="number" className="form-control" value={quantity} onChange={(e) =>setQuantity(e.target.value)} min={1} />
+								
 								</div>
 								<div className="mb-2">
 									<label className="form-label">Select Event</label>
