@@ -2,6 +2,19 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 function Sidebar() {
+     const logoutsubmit = () =>{
+    localStorage.removeItem("token")
+    localStorage.removeItem("id")
+    navigate("/login")
+
+    const handlescroll = (e, id) =>{
+      const section = document.getElementById(id)
+      if (section) {
+        section.scrollIntoView({behavior: "smooth"})
+      }
+    }
+    
+  }
   return (
     <div>
     
@@ -55,6 +68,11 @@ function Sidebar() {
             <li className="nav-item">
                 <Link className="nav-link collapsed" to="/admin/venue" >
                     <span>Venues</span>
+                </Link>
+            </li>
+             <li className="nav-item">
+                <Link className="nav-link collapsed" onClick={logoutsubmit} >
+                    <span>Logout</span>
                 </Link>
             </li>
             {/* <li className="nav-item">

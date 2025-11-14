@@ -39,9 +39,11 @@ function Nav() {
   }, []);
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
+  const userid =  localStorage.getItem('id')
 
   const logoutsubmit = () =>{
     localStorage.removeItem("token")
+    localStorage.removeItem("id")
     navigate("/login")
 
     const handlescroll = (e, id) =>{

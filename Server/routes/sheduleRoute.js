@@ -20,4 +20,18 @@ router.get("/", async(req, res)=>{
     res.json({getShedule})
 })
 
+router.delete("/:id", async (req,res)=>{
+   try {
+     const {id} = req.params
+
+    const deleteShedule = await Shedule.findByIdAndDelete(id)
+    if (!deleteShedule) {
+      return res.status(404).json({ message: "Shedule Not Found" });
+    }
+    res.json({ message: "Shedule Deleted Successfully" });
+   } catch (error) {
+    res.status(500).json({ message: "Delete Failed", error });
+   }
+    
+})
 export default router;

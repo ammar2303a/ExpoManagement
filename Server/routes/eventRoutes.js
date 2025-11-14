@@ -22,6 +22,56 @@ router.get("/", async (req, res) =>{
    res.json({getEvent})
 })
 
+router.put("/:id", upload.single("cardImage"), async (req, res) => {
+  try {
+    const { title, description, endDate, sessions } = req.body;
+
+    const updatedData = {
+      title,
+      description,
+      endDate,
+    };
+
+    // If new image uploaded
+    if (req.file) {
+      updatedData.cardImage = req.file.filename;
+    }
+
+    // If sessions update
+    if (sessions) {
+      updatedData.sessions = JSON.parse(sessions);
+    }
+
+    const updateEvent = await Events.findByIdAndUpdate(
+      req.params.id,
+      updatedData,
+      { new: true }
+    );
+
+    if (!updateEvent) {
+      return res.status(404).json({ message: "Event Not Found" });
+    }
+
+    res.json({ message: "Event Updated Successfully", updateEvent });
+  } catch (error) {
+    res.status(500).json({ message: "Update Failed", error });
+  }
+});
+
+
+router.delete("/:id", async (req, res) => {
+  try {
+    const {id} = req.params
+   const deletedEvent = await Events.findByIdAndDelete(id);
+    
+    if (!deletedEvent) {
+      return res.status(404).json({ message: "Event Not Found" });
+    }
+    res.json({ message: "Event Deleted Successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Delete Failed", error });
+  }
+});
 
 
 export default router

@@ -11,10 +11,12 @@ function EventAdd() {
   const [allShedule, setAllShedule] = useState([]);
   const [allSpeaker, setAllSpeaker] = useState([]);
   const [allVenues, setAllVenue] = useState([]);
-  // console.log(allEvent);
-  
+  const [editData, setEditData] = useState(null);
 
-  
+  // console.log(allEvent);
+
+
+
 
 
 
@@ -28,27 +30,27 @@ function EventAdd() {
   const [sessions, setSessions] = useState([]);
 
   const addSession = () => {
-  if (!venue || !speakers || !schedule) {
-    return alert("Please select Venue, Speaker and Schedule before adding session");
-  }
+    if (!venue || !speakers || !schedule) {
+      return alert("Please select Venue, Speaker and Schedule before adding session");
+    }
 
-  const newSession = {
-    title,
-    description,
-    endDate,
-    cardImage,
-    venue,
-    speakers,
-    schedule,
+    const newSession = {
+      title,
+      description,
+      endDate,
+      cardImage,
+      venue,
+      speakers,
+      schedule,
+    };
+
+    setSessions([...sessions, newSession]);
+
+    // Reset only the dropdowns for the next session
+    // setVenue("");
+    // setSpeaker("");
+    // setShedule("");
   };
-
-  setSessions([...sessions, newSession]);
-
-  // Reset only the dropdowns for the next session
-  // setVenue("");
-  // setSpeaker("");
-  // setShedule("");
-};
 
 
   const eventSubmit = async (e) => {
@@ -66,11 +68,11 @@ function EventAdd() {
       formdata.append("endDate", endDate)
       formdata.append("cardImage", cardImage)
       formdata.append("venue", venue)
-       formdata.append("speakers", speakers);
+      formdata.append("speakers", speakers);
       formdata.append("schedule", schedule);
-     formdata.append("sessions", JSON.stringify(sessions));
+      formdata.append("sessions", JSON.stringify(sessions));
 
-      
+
 
       // formdata.append("speakers", JSON.stringify([speakers]));
       // formdata.append("schedule", JSON.stringify([schedule]));
@@ -92,10 +94,28 @@ function EventAdd() {
       setSchedule("")
     } catch (error) {
       console.error(error);
-    res.status(400).json({ message: "Insertion Failed", error });
+      res.status(400).json({ message: "Insertion Failed", error });
     }
 
   }
+
+const openEditModal = (event) => {
+  setEditData(event); 
+  setTitle(event.title);
+  setDescription(event.description);
+  setEndDate(event.endDate?.slice(0,10));
+  setSessions(event.sessions || []);
+  setVenue(event.venue?._id || '');
+  setSpeaker(event.speakers?._id || '');
+  setShedule(event.schedule?._id || '');
+  
+  // Trigger modal
+  document.getElementById("editModalBtn").click();
+};
+
+
+
+
   const fetchShedule = async () => {
     try {
       const res = await axios.get("http://localhost:5000/api/shedule/")
@@ -124,15 +144,24 @@ function EventAdd() {
     }
   }
 
-   const fetchEvent = async ()=>{
+  const fetchEvent = async () => {
     try {
       const res = await axios.get("http://localhost:5000/api/event/")
       setAllEvent(res.data.getEvent)
-      
+
     } catch (error) {
       alert('Error fetching record Event:', error)
     }
   }
+  useEffect(() => {
+  if(editData){
+    setTitle(editData.title);
+    setDescription(editData.description);
+    setEndDate(editData.endDate?.slice(0,10));
+    setSessions(editData.sessions || []);
+  }
+}, [editData]);
+
 
   useEffect(() => {
     fetchVenue();
@@ -141,7 +170,21 @@ function EventAdd() {
     fetchEvent();
   }, [])
 
- 
+  const deleteEvent = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this event?")) return;
+
+    try {
+      await axios.delete(`http://localhost:5000/api/event/${id}`);
+      alert("Event Deleted Successfully");
+
+      fetchEvent(); // refresh table
+    }
+    catch (error) {
+      alert("Delete Failed");
+    }
+  };
+
+
   return (
     <div>
       <h2 className='text-center'>
@@ -185,33 +228,37 @@ function EventAdd() {
                     <th scope="col" className="text-nowrap">Venue</th>
                     <th scope="col" className="text-nowrap">Speaker</th>
                     <th scope="col" className="text-nowrap">Shedule</th>
+                    <th scope="col" className="text-nowrap">Update</th>
+                    <th scope="col" className="text-nowrap">Delete</th>
                   </tr>
                 </thead>
 
                 <tbody>
                   {/* Example Row — Future Mapping Yahan Aayegi */}
-                 {allEvent.map((eve, i)=>
-                 eve.sessions.map((ses, j)=>(
-                  <tr key={`${i}-${j}`}>
-                    <td className="fw-semibold text-nowrap">{eve.title}</td>
-                    <td className="text-nowrap">{eve.description}</td>
-                    <td className="text-nowrap">{eve.startDate}</td>
-                    <td className="text-nowrap">{eve.endDate}</td>
-                      <td className="fw-semibold text-nowrap">{eve.cardImage}</td>
-                    <td className="text-nowrap">{ses.venue?.name}</td>
-                    <td className="text-nowrap">{ses.speakers?.name}</td>
-                    <td className="text-nowrap">{ses.schedule?.dayTitle}</td>
-                  </tr>
-                 ))
-              
-                 )}
+                  {allEvent.map((eve, i) =>
+                    eve.sessions.map((ses, j) => (
+                      <tr key={`${i}-${j}`}>
+                        <td className="fw-semibold text-nowrap">{eve.title}</td>
+                        <td className="text-nowrap">{eve.description}</td>
+                        <td className="text-nowrap">{eve.startDate}</td>
+                        <td className="text-nowrap">{eve.endDate}</td>
+                        <td className="fw-semibold text-nowrap">{eve.cardImage}</td>
+                        <td className="text-nowrap">{ses.venue?.name}</td>
+                        <td className="text-nowrap">{ses.speakers?.name}</td>
+                        <td className="text-nowrap">{ses.schedule?.dayTitle}</td>
 
-                  {/* No Data Message */}
-                  <tr>
-                    <td colSpan="4" className="text-center text-muted py-4">
-                      No data available
-                    </td>
-                  </tr>
+         <td className="btn btn-success m-3" onClick={() => openEditModal(eve)}>Edit</td>
+
+
+                        <td className="text-danger" style={{ cursor: "pointer" }}onClick={() => deleteEvent(eve._id)}>Delete</td>
+
+                      </tr>
+                    ))
+
+                  )}
+
+                 <button id="editModalBtn"type="button" className="d-none" data-bs-toggle="modal" data-bs-target="#mainModalU"></button>
+
                 </tbody>
               </table>
             </div>
@@ -219,12 +266,102 @@ function EventAdd() {
         </div>
       </div>
 
-     <div className="modal fade" id="mainModal" tabIndex="-1" aria-labelledby="mainModalLabel" aria-hidden="true">
+      <div className="modal fade" id="mainModal" tabIndex="-1" aria-labelledby="mainModalLabel" aria-hidden="true">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <form onSubmit={eventSubmit}>
+              <div className="modal-header">
+                <h5 className="modal-title" id="mainModalLabel">Add Schedule & Sessions</h5>
+                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+
+              <div className="modal-body">
+                {/* Title */}
+                <div className="input-group mb-3">
+                  <span className="input-group-text w-25">Title</span>
+                  <input type="text" className="form-control" value={title} onChange={(e) => setTitle(e.target.value)} />
+                </div>
+
+                {/* Description */}
+                <div className="input-group mb-3">
+                  <span className="input-group-text w-25">Description</span>
+                  <input type="text" className="form-control" value={description} onChange={(e) => setDescription(e.target.value)} />
+                </div>
+
+                {/* End Date */}
+                <div className="input-group mb-3">
+                  <span className="input-group-text w-25">End Date</span>
+                  <input type="date" className="form-control" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
+                </div>
+
+                {/* Card Image */}
+                <div className="input-group mb-3">
+                  <span className="input-group-text w-25">Card Image</span>
+                  <input type="file" accept="image/*" className="form-control" onChange={(e) => setCardImage(e.target.files[0])} />
+                </div>
+
+                {/* Venue */}
+                <div className="mb-2">
+                  <label className="form-label">Select Venue</label>
+                  <select className="form-select" value={venue} onChange={(e) => setVenue(e.target.value)}>
+                    <option value="">Select</option>
+                    {allVenues.map((v, i) => <option key={i} value={v._id}>{v.name}</option>)}
+                  </select>
+                </div>
+
+                {/* Speaker */}
+                <div className="mb-2">
+                  <label className="form-label">Select Speaker</label>
+                  <select className="form-select" value={speakers} onChange={(e) => setSpeaker(e.target.value)}>
+                    <option value="">Select</option>
+                    {allSpeaker.map((s, i) => <option key={i} value={s._id}>{s.name}</option>)}
+                  </select>
+                </div>
+
+                {/* Schedule */}
+                <div className="mb-2">
+                  <label className="form-label">Select Schedule</label>
+                  <select className="form-select" value={schedule} onChange={(e) => setShedule(e.target.value)}>
+                    <option value="">Select</option>
+                    {allShedule.map((s, i) => <option key={i} value={s._id}>{s.dayTitle}</option>)}
+                  </select>
+                </div>
+
+                {/* Add Session */}
+                <button type="button" className="btn btn-outline-primary mb-3" onClick={addSession}>
+                  Add Session
+                </button>
+
+                {/* Show Added Sessions */}
+                {sessions.length > 0 && (
+                  <ul className="list-group">
+                    {sessions.map((s, i) => (
+                      <li key={i} className="list-group-item">
+                        {s.title} | {s.venue} | {s.speakers} | {s.schedule}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+
+              <div className="modal-footer">
+                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" className="btn btn-success">Save Schedule</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      
+
+       {/* Edit Modal */}
+<div className="modal fade" id="mainModalU" tabIndex="-1" aria-labelledby="mainModalLabel" aria-hidden="true">
   <div className="modal-dialog">
     <div className="modal-content">
-      <form onSubmit={eventSubmit}>
+      <form >
         <div className="modal-header">
-          <h5 className="modal-title" id="mainModalLabel">Add Schedule & Sessions</h5>
+          <h5 className="modal-title" id="mainModalLabel">Update Event</h5>
           <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
 
@@ -232,82 +369,69 @@ function EventAdd() {
           {/* Title */}
           <div className="input-group mb-3">
             <span className="input-group-text w-25">Title</span>
-            <input type="text" className="form-control" value={title} onChange={(e) => setTitle(e.target.value)} />
+            <input type="text" className="form-control" value={title} onChange={(e)=>setTitle(e.target.value)} />
           </div>
 
           {/* Description */}
           <div className="input-group mb-3">
             <span className="input-group-text w-25">Description</span>
-            <input type="text" className="form-control" value={description} onChange={(e) => setDescription(e.target.value)} />
+            <input type="text" className="form-control" value={description} onChange={(e)=>setDescription(e.target.value)} />
           </div>
 
           {/* End Date */}
           <div className="input-group mb-3">
             <span className="input-group-text w-25">End Date</span>
-            <input type="date" className="form-control" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
+            <input type="date" className="form-control" value={endDate} onChange={(e)=>setEndDate(e.target.value)} />
           </div>
 
           {/* Card Image */}
           <div className="input-group mb-3">
             <span className="input-group-text w-25">Card Image</span>
-            <input type="file" accept="image/*" className="form-control" onChange={(e) => setCardImage(e.target.files[0])} />
+            <input type="file" accept="image/*" className="form-control" onChange={(e)=>setCardImage(e.target.files[0])} />
           </div>
 
           {/* Venue */}
           <div className="mb-2">
             <label className="form-label">Select Venue</label>
-            <select className="form-select" value={venue} onChange={(e) => setVenue(e.target.value)}>
+            <select className="form-select" value={venue} onChange={(e)=>setVenue(e.target.value)}>
               <option value="">Select</option>
-              {allVenues.map((v, i) => <option key={i} value={v._id}>{v.name}</option>)}
+              {allVenues.map((v, i)=> <option key={i} value={v._id}>{v.name}</option>)}
             </select>
           </div>
 
           {/* Speaker */}
           <div className="mb-2">
             <label className="form-label">Select Speaker</label>
-            <select className="form-select" value={speakers} onChange={(e) => setSpeaker(e.target.value)}>
+            <select className="form-select" value={speakers} onChange={(e)=>setSpeaker(e.target.value)}>
               <option value="">Select</option>
-              {allSpeaker.map((s, i) => <option key={i} value={s._id}>{s.name}</option>)}
+              {allSpeaker.map((s, i)=> <option key={i} value={s._id}>{s.name}</option>)}
             </select>
           </div>
 
           {/* Schedule */}
           <div className="mb-2">
             <label className="form-label">Select Schedule</label>
-            <select className="form-select" value={schedule} onChange={(e) => setShedule(e.target.value)}>
+            <select className="form-select" value={schedule} onChange={(e)=>setShedule(e.target.value)}>
               <option value="">Select</option>
-              {allShedule.map((s, i) => <option key={i} value={s._id}>{s.dayTitle}</option>)}
+              {allShedule.map((s, i)=> <option key={i} value={s._id}>{s.dayTitle}</option>)}
             </select>
           </div>
-
-          {/* Add Session */}
-          <button type="button" className="btn btn-outline-primary mb-3" onClick={addSession}>
-            Add Session
-          </button>
-
-          {/* Show Added Sessions */}
-          {sessions.length > 0 && (
-            <ul className="list-group">
-              {sessions.map((s, i) => (
-                <li key={i} className="list-group-item">
-                  {s.title} | {s.venue} | {s.speakers} | {s.schedule}
-                </li>
-              ))}
-            </ul>
-          )}
         </div>
 
         <div className="modal-footer">
           <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="submit" className="btn btn-success">Save Schedule</button>
+          <button type="submit" className="btn btn-success">Update Event</button>
         </div>
       </form>
     </div>
   </div>
 </div>
 
+
     </div>
   )
+
+  
 }
 
 export default EventAdd

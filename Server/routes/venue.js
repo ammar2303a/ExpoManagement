@@ -18,4 +18,19 @@ router.get("/", async (req, res) =>{
     res.json(getvenue)
 })
 
+router.delete("/:id", async (req,res)=>{
+   try {
+     const {id} = req.params
+
+    const deleteVenue = await Venue.findByIdAndDelete(id)
+    if (!deleteVenue) {
+      return res.status(404).json({ message: "Venue Not Found" });
+    }
+    res.json({ message: "Venue Deleted Successfully" });
+   } catch (error) {
+    res.status(500).json({ message: "Delete Failed", error });
+   }
+    
+})
+
 export default  router

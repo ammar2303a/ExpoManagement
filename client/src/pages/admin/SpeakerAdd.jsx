@@ -86,6 +86,20 @@ function SpeakerAdd() {
         
         
     },[])
+
+     const deleteEvent = async (id) => {
+          if (!window.confirm("Are you sure you want to delete this shedule?")) return;
+      
+          try {
+            await axios.delete(`http://localhost:5000/api/speaker/${id}`);
+            alert("Speaker Deleted Successfully");
+      
+            fetchSpeaker(); // refresh table
+          }
+          catch (error) {
+            alert("Delete Failed");
+          }
+        };
   return (
     <div>
        <h2 className='text-center'>
@@ -130,6 +144,7 @@ function SpeakerAdd() {
               <th scope="col" className="text-nowrap">Image</th>
               <th scope="col" className="text-nowrap">Designation</th>
               <th scope="col" className="text-nowrap">Venue</th>
+              <th scope="col" className="text-nowrap">Delete</th>
             </tr>
           </thead>
 
@@ -155,6 +170,7 @@ function SpeakerAdd() {
                   <td className="text-nowrap">
                     {speak.venueId?.name || <span className="text-muted">N/A</span>}
                   </td>
+                  <td className="text-nowrap text-danger" style={{ cursor: "pointer" }}onClick={() => deleteEvent(speak._id)}>Delete</td>
                 </tr>
               ))
             ) : (

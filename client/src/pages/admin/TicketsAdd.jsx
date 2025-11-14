@@ -44,6 +44,20 @@ function TicketsAdd() {
             fetchTickets();
             
         },[])
+         const deleteEvent = async (id) => {
+          if (!window.confirm("Are you sure you want to delete this Ticket?")) return;
+      
+          try {
+            await axios.delete(`http://localhost:5000/api/ticket/${id}`);
+
+            alert("Ticket Deleted Successfully");
+      
+            fetchTickets(); // refresh table
+          }
+          catch (error) {
+            alert("Delete Failed");
+          }
+        };
   return (
     <div>
       <h2 className='text-center'>
@@ -58,7 +72,7 @@ function TicketsAdd() {
   <div className="card shadow-sm border-0 rounded-3">
     <div className="card-header bg-primary text-white d-flex justify-content-between align-items-center">
       <h5 className="mb-0 text-light">Table Title</h5>
-      <span className="badge bg-light text-primary">Total Tickets: 0</span>
+      <span className="badge bg-light text-primary">Total Tickets: {alltickets.length || 0}</span>
     </div>
 
     <div className="card-body p-0">
@@ -77,6 +91,7 @@ function TicketsAdd() {
               <th scope="col" className="text-nowrap">Price</th>
               <th scope="col" className="text-nowrap">Quantity</th>
               <th scope="col" className="text-nowrap">Sold</th>
+              <th scope="col" className="text-nowrap">Delete</th>
             </tr>
           </thead>
 
@@ -87,6 +102,7 @@ function TicketsAdd() {
               <td className="text-nowrap">{tic.price}</td>
               <td className="text-nowrap">{tic.quantity}</td>
               <td className="text-nowrap">{tic.sold}</td>
+              <td className="text-nowrap text-danger" style={{ cursor: "pointer" }}onClick={() => deleteEvent(tic._id)}>Delete</td>
             </tr>
             ))}
 

@@ -19,4 +19,19 @@ router.get('/', async (req, res) =>{
     res.json(getSpeaker)
 })
 
+router.delete("/:id", async (req,res)=>{
+   try {
+     const {id} = req.params
+
+    const deleteSpeaker = await Speaker.findByIdAndDelete(id)
+    if (!deleteSpeaker) {
+      return res.status(404).json({ message: "Speaker Not Found" });
+    }
+    res.json({ message: "Speaker Deleted Successfully" });
+   } catch (error) {
+    res.status(500).json({ message: "Delete Failed", error });
+   }
+    
+})
+
 export default router;

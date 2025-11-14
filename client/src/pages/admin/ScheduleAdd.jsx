@@ -120,6 +120,20 @@ function ScheduleAdd() {
 
 
   }, [])
+
+   const deleteEvent = async (id) => {
+      if (!window.confirm("Are you sure you want to delete this shedule?")) return;
+  
+      try {
+        await axios.delete(`http://localhost:5000/api/shedule/${id}`);
+        alert("Shedule Deleted Successfully");
+  
+        fetchShedule(); // refresh table
+      }
+      catch (error) {
+        alert("Delete Failed");
+      }
+    };
   return (
     <div>
       <h2 className='text-center'>
@@ -167,6 +181,7 @@ function ScheduleAdd() {
               <th className="text-nowrap">Time End</th>
               <th className="text-nowrap">Room</th>
               <th className="text-nowrap">Speaker</th>
+              <th className="text-nowrap">Delete</th>
             </tr>
           </thead>
 
@@ -182,6 +197,7 @@ function ScheduleAdd() {
                     <td className="text-nowrap">{session.timeEnd}</td>
                     <td className="text-nowrap">{session.room}</td>
                     <td className="text-nowrap">{session.speaker?.name || <span className="text-muted">N/A</span>}</td>
+                    <td className="text-nowrap text-danger" style={{ cursor: "pointer" }}onClick={() => deleteEvent(schedule._id)}>Delete</td>
                   </tr>
                 ))
               )

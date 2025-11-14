@@ -83,6 +83,20 @@ function VenueAdd() {
         
     },[])
 
+      const deleteEvent = async (id) => {
+          if (!window.confirm("Are you sure you want to delete this Venue?")) return;
+      
+          try {
+            await axios.delete(`http://localhost:5000/api/venue/${id}`);
+            
+            alert("Venue Deleted Successfully");
+      
+            fetchVenue(); // refresh table
+          }
+          catch (error) {
+            alert("Delete Failed");
+          }
+        };
   return (
     <div>
       <h2 className='text-center'>
@@ -184,6 +198,7 @@ function VenueAdd() {
                     <span className="text-muted">No travel options</span>
                   )}
                 </td>
+                <td className="text-nowrap text-danger" style={{ cursor: "pointer" }}onClick={() => deleteEvent(allven._id)}>Delete</td>
               </tr>
             ))
           ) : (

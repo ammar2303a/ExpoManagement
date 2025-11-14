@@ -29,11 +29,11 @@ router.post("/create", async (req, res) =>{
      res.status(201).json({message:"Booking Succesfull", savebook, updataedTicket: ticket})
 })
 
-router.get("/", async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
-    // const {userId} =req.params.id
+    const {userId} =req.params.id
     //  console.log("Frontend se userId:", userId);
-    const getBooking = await Booking.find()
+    const getBooking = await Booking.find(userId)
       .populate("userId", "name email")
       .populate({
         path: "eventId",
@@ -52,5 +52,9 @@ router.get("/", async (req, res) => {
     res.status(500).json({ message: "Error fetching bookings" });
   }
 });
+
+// DELETE EVENT
+
+
 
 export default router

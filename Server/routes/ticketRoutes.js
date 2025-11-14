@@ -17,5 +17,20 @@ router.get("/", async (req, res)=>{
     res.json({getTicket})
 })
 
+router.delete("/:id", async (req,res)=>{
+   try {
+     const {id} = req.params
+
+    const deleteticket = await Ticket.findByIdAndDelete(id)
+    if (!deleteticket) {
+      return res.status(404).json({ message: "Ticket Not Found" });
+    }
+    res.json({ message: "Ticket Deleted Successfully" });
+   } catch (error) {
+    res.status(500).json({ message: "Delete Failed", error });
+   }
+    
+})
+
 
 export default router
